@@ -14,31 +14,8 @@
         <div class="flex items-center justify-center mt-8">
             <span class="text-white text-2xl font-semibold uppercase">Bots</span>
         </div>
-        <ul class="mt-6 flex-1 overflow-y-auto">
-            <li class="px-5 py-2 flex items-center">
-                <img src="https://pbs.twimg.com/media/EEdYYn7WwAEcPaI.jpg" alt="avatar" class="w-10 h-10 rounded-full mr-3">
-                <div class="flex flex-col">
-                    <span class="text-gray-300 font-semibold">Mohamed Mossad</span>
-                    <span class="text-gray-400 text-sm">Bot - Météo</span>
-                </div>
-                <div class="ml-auto h-4 w-4 bg-green-500 rounded-full"></div>
-            </li>
-            <li class="px-5 py-2 flex items-center">
-                <img src="https://pbs.twimg.com/profile_images/583674329990361088/UlQJ24vU_400x400.jpg" alt="avatar" class="w-10 h-10 rounded-full mr-3">
-                <div class="flex flex-col">
-                    <span class="text-gray-300 font-semibold">Christopher Nol Âne</span>
-                    <span class="text-gray-400 text-sm">Bot - Films</span>
-                </div>
-                <div class="ml-auto h-4 w-4 bg-gray-400 rounded-full"></div>
-            </li>
-            <li class="px-5 py-2 flex items-center">
-                <img src="https://www.ln24.be/sites/default/files/styles/full_no_crop/public/2022-03/Le-retour-de-Lagaffe-2.jpg?itok=-WGc16b0" alt="avatar" class="w-10 h-10 rounded-full mr-3">
-                <div class="flex flex-col">
-                    <span class="text-gray-300 font-semibold">Gaston laGiffe</span>
-                    <span class="text-gray-400 text-sm">Bot - Gif</span>
-                </div>
-                <div class="ml-auto h-4 w-4 bg-gray-400 rounded-full"></div>
-            </li>
+        <ul id="bots-container" class="mt-6 flex-1 overflow-y-auto">
+            <!-- All bots here... -->
         </ul>
     </nav>
 
@@ -60,5 +37,6 @@
         </form>
     </div>
 </body>
+<script src="bots.js"></script>
 <script src="main.js"></script>
 </html>
