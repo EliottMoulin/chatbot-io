@@ -1,6 +1,6 @@
 "useStricts";
 
-const commands = ['/help', '/clear', '/hello', '/weather']
+const commands = ['/help', '/clear', '/hello', '/weather', '/movie']
 
 let messageContainer = document.getElementById('message-container');
 let botsContainer = document.getElementById('bots-container');
@@ -84,6 +84,53 @@ const executeCommand = async (command) => {
             if (parameters[0] === 'wind'){
                 messageContainer.innerHTML += createMessageHtml(false, bots[1].avatar, bots[1].name, `Il y a ${(weather.wind.speed / 1000) * 3600} km/h de vent à ${city}`);
             }
+            break;
+
+        case '/movie':
+            if (parameters.length == 0 || !bots[2].parameters.includes(parameters[0])) {
+                messageContainer.innerHTML += createMessageHtml(false, bots[2].avatar, bots[2].name, 'Veuillez entrer un paramètre valide parmi : trend, bad, best');
+                break;
+            }
+
+            if (parameters[0] === 'trend'){
+                let movies = await getTrendWeekMovies();
+    
+                let message = 'Voici les 10 films les plus populaires cette semaine :<br><br>';
+                for (let i = 0; i < 10; i++) {
+                    message += `${movies.results[i].title} (${movies.results[i].release_date})<br>`;
+                }
+                messageContainer.innerHTML += createMessageHtml(false, bots[2].avatar, bots[2].name, message);
+            }           
+
+            if (parameters[0] === 'bad'){
+                if (parameters[1] == undefined || parameters[1].length == 0 || parameters[1].length != 4 || parameters[1] < 1900 || parameters[1] > new Date().getFullYear()) {
+                    messageContainer.innerHTML += createMessageHtml(false, bots[2].avatar, bots[2].name, `Veuillez entrer une année, exemple : /movie bad 2010`);
+                    break;
+                }
+                let year = parameters[1];
+                let movies = await getBadMoviesFromYear(year);
+                let message = `Voici les 10 films les plus mal notés de l'année ${year} :<br><br>`;
+                for (let i = 0; i < 10; i++) {
+                    message += `${movies.results[i].title} (${movies.results[i].vote_average}/10)<br>`;
+                }
+                messageContainer.innerHTML += createMessageHtml(false, bots[2].avatar, bots[2].name, message);
+            }
+
+            if (parameters[0] === 'best'){
+                if (parameters[1] == undefined || parameters[1].length == 0 || parameters[1].length != 4 || parameters[1] < 1900 || parameters[1] > new Date().getFullYear()) {
+                    messageContainer.innerHTML += createMessageHtml(false, bots[2].avatar, bots[2].name, `Veuillez entrer une année, exemple : /movie best 2010`);
+                    break;
+                }
+                let year = parameters[1];
+                let movies = await getBestMoviesFromYear(year);
+                let message = `Voici les 10 films les mieux notés de l'année ${year} :<br><br>`;
+                for (let i = 0; i < 10; i++) {
+                    message += `${movies.results[i].title} (${movies.results[i].vote_average}/10)<br>`;
+                }
+                messageContainer.innerHTML += createMessageHtml(false, bots[2].avatar, bots[2].name, message);
+            }
+
+
     }
 }
 

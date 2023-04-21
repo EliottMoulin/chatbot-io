@@ -20,7 +20,7 @@ const bots = [
         description: 'Bot - Films',
         avatar: 'https://pbs.twimg.com/profile_images/583674329990361088/UlQJ24vU_400x400.jpg',
         response : 'Tenet ou t\'es pas net ?',
-        parameters: []
+        parameters: ['trend', 'bad', 'best']
     },  
     {
         name: 'Gaston laGiffe',
@@ -55,7 +55,28 @@ async function getWeatherFromCityName(cityName) {
 }
 
 // --- Christopher Nol Âne API --- //
-// todo
+
+async function getTrendWeekMovies() {
+    const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${MOVIES_API_KEY}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+}
+
+async function getBadMoviesFromYear(year) {
+    const url = `https://api.themoviedb.org/3/discover/movie?api_key=${MOVIES_API_KEY}&language=fr-FR&sort_by=vote_average.asc&include_adult=false&include_video=false&page=1&primary_release_year=${year}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+}
+
+async function getBestMoviesFromYear(year) {
+    const url = `https://api.themoviedb.org/3/discover/movie?api_key=${MOVIES_API_KEY}&language=fr-FR&sort_by=vote_average.desc&include_adult=false&include_video=false&page=1&primary_release_year=${year}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+}
+
 
 // --- Gaston laGiffe API --- //
 // todo
