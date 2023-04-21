@@ -34,14 +34,14 @@ const bots = [
 // --- Mohamed Mossad API --- //
 
 async function getLatAndLonFromCityName(cityName) {
-    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=4b69fa9dabd4dc5e1f5a89b9b26eb0a7`;
+    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${WEATHER_API_KEY}`;
     const response = await fetch(url);
     const data = await response.json();
     return data;
 }
 
 async function getWeatherFromLatAndLon(lat, lon) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4b69fa9dabd4dc5e1f5a89b9b26eb0a7&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`;
     const response = await fetch(url);
     const data = await response.json();
     return data;
