@@ -27,7 +27,7 @@ const bots = [
         description: 'Bot - Gifs',
         avatar: 'https://www.ln24.be/sites/default/files/styles/full_no_crop/public/2022-03/Le-retour-de-Lagaffe-2.jpg?itok=-WGc16b0',
         response : 'https://media1.giphy.com/media/13GgTtFZZDIcjttYXg/giphy.gif',
-        parameters: []
+        parameters: ['random', 'trend', 'search']
     },   
 ];
 
@@ -79,4 +79,24 @@ async function getBestMoviesFromYear(year) {
 
 
 // --- Gaston laGiffe API --- //
-// todo
+
+async function getRandomGif() {
+    const url = `https://api.giphy.com/v1/gifs/random?api_key=${GIPHY_API_KEY}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+}
+
+async function getTrendGifs(number = 10) {
+    const url = `https://api.giphy.com/v1/gifs/trending?api_key=${GIPHY_API_KEY}&limit=${number}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+}
+
+async function getGifFromSearch(search) {
+    const url = `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${search}&rating=g&lang=fr&limit=10`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+}
