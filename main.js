@@ -1,6 +1,20 @@
 "useStricts";
 
-const commands = ['/help', '/clear', '/hello', '/weather', '/movie', '/gif', '/gpt'];
+const commands = [
+    "/help -> Liste les commandes possibles",
+    "/clear -> Supprime les messages du chat",
+    "/hello -> Fais parler tous les bots",
+    "/weather {temp} {ville} -> Affiche la température dans une ville",
+    "/weather {wind} {ville} -> Affiche la vitesse du vent dans une ville",
+    "/weather {cloud} {ville} -> Affiche le pourcentage de nuages dans une ville",
+    "/movie trend -> Affiche les films tendance de la semaine",
+    "/movie bad {year} -> Affiche les 10 pires films de l'année choisie",
+    "/movie best {year} -> Affiche les 10 meilleurs films de l'année choisie",
+    "/gif trend {number} -> Affiche un nombre de gif choisi",
+    "/gif random -> Affiche un gif aléatoire",
+    "/gif search {query} -> Affiche 10 gifs en fonction d'un mot clé",
+    "/gpt {bot} {prompt} -> Affiche une réponse de chatGpt pour un bot choisi en fonction d'un prompt"
+  ];
 
 let messageContainer = document.getElementById('message-container');
 let botsContainer = document.getElementById('bots-container');
@@ -52,11 +66,9 @@ const executeCommand = async (command) => {
 
     switch (command[0]) {
         case '/help':
-            messageContainer.innerHTML += `
-            <div class="flex items-center mb-4 ml-12 flex-wrap">
-                <span class="text-gray-400 mr-2">Commandes :</span>
-                ${commands.map(c => `<span class="bg-gray-100 rounded-lg px-3 py-1 text-gray-600 text-sm mr-2 mb-2 inline-block">${c}</span>`).join('')}
-            </div> `;
+            let possibleCommandsHtml = commands.map(command => `<strong>${command.split(" -> ")[0]}</strong> -> ${command.split(" -> ")[1]}`).join("<br>");
+            let message = `Voici les commandes possibles :<br><br>${possibleCommandsHtml}`;
+            createMessageHtml(false, bots[0].avatar, bots[0].name, message);
             break;
 
         case '/clear':
@@ -190,13 +202,11 @@ const executeCommand = async (command) => {
             }
 
             let prompt = parameters.slice(1).join(" ");
-
-            console.log(`GPT-3 request : ${bot.name} - ${prompt}`);
             
             let response = await getGptResponse(parameters[0], prompt);
             console.log(response);
             createMessageHtml(false, bot.avatar, bot.name, response);
-
+            break;
     }
 }
 
@@ -209,7 +219,7 @@ submitButton.addEventListener('click', () => {
     createMessageHtml(true, 'https://i.pravatar.cc/300', 'You', message);
 
     if (message.startsWith('/')) {
-        if (commands.includes(message.split(' ')[0])) {
+        if (commands.map(command => command.split(' ')[0]).includes(message.split(' ')[0])) {
             executeCommand(message.split(' '));
         } else {
             createMessageHtml(false, bots[0].avatar, bots[0].name, `Commande inconnue : ${message.split(' ')[0]}`);
