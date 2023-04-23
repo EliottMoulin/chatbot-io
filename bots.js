@@ -3,6 +3,7 @@
 const bots = [
     {
         name: 'PapAdmin',
+        nickname: 'admin',
         description: 'Bot - Admin',
         avatar: 'https://www.gala.fr/imgre/fit/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2Fprismamedia_people.2F2017.2F06.2F30.2F2c7551dc-999d-42d1-8020-81bcab3a2d92.2Ejpeg/2048x1536/quality/80/pape-francois.jpeg',
         response : 'Bienvenue sur le chat !',
@@ -10,6 +11,7 @@ const bots = [
     },
     {
         name: 'Mohamed Mossad',
+        nickname: 'momo',
         description: 'Bot - Météo',
         avatar: 'https://pbs.twimg.com/media/EEdYYn7WwAEcPaI.jpg',
         response : 'Salam aleykoum, il fait bien beau aujourd\'hui',
@@ -17,6 +19,7 @@ const bots = [
     },      
     {
         name: 'Christopher Nol Âne',
+        nickname: 'christ',
         description: 'Bot - Films',
         avatar: 'https://pbs.twimg.com/profile_images/583674329990361088/UlQJ24vU_400x400.jpg',
         response : 'Tenet ou t\'es pas net ?',
@@ -24,6 +27,7 @@ const bots = [
     },  
     {
         name: 'Gaston laGiffe',
+        nickname: 'gaston',
         description: 'Bot - Gifs',
         avatar: 'https://www.ln24.be/sites/default/files/styles/full_no_crop/public/2022-03/Le-retour-de-Lagaffe-2.jpg?itok=-WGc16b0',
         response : 'https://media1.giphy.com/media/13GgTtFZZDIcjttYXg/giphy.gif',
@@ -100,3 +104,33 @@ async function getGifFromSearch(search) {
     const data = await response.json();
     return data;
 }
+
+
+// --- ChatGPT --- //
+
+async function getGptResponse(prompt) {
+    const url = "https://api.openai.com/v1/chat/completions";
+    const headers = {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${CHATPGT_API_KEY}`
+    };
+    const data = {
+      "model": "gpt-3.5-turbo",
+      "messages": [{ "role": "user", "content": prompt }]
+    };
+  
+    const response = await fetch(url, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+        return "ERREUR : " + response.status + ' -> ' + response.statusText;
+    }
+  
+    const result = await response.json();
+    const responseText = result.choices[0].messages.content.trim();
+  
+    return responseText;
+  }
