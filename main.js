@@ -4,17 +4,19 @@ const commands = [
     "/help -> Liste les commandes possibles",
     "/clear -> Supprime les messages du chat",
     "/hello -> Fais parler tous les bots",
-    "/weather {temp} {ville} -> Affiche la température dans une ville",
-    "/weather {wind} {ville} -> Affiche la vitesse du vent dans une ville",
-    "/weather {cloud} {ville} -> Affiche le pourcentage de nuages dans une ville",
+    "/weather temp {ville} -> Affiche la température dans une ville",
+    "/weather wind {ville} -> Affiche la vitesse du vent dans une ville",
+    "/weather cloud {ville} -> Affiche le pourcentage de nuages dans une ville",
     "/movie trend -> Affiche les films tendance de la semaine",
     "/movie bad {year} -> Affiche les 10 pires films de l'année choisie",
     "/movie best {year} -> Affiche les 10 meilleurs films de l'année choisie",
     "/gif trend {number} -> Affiche un nombre de gif choisi",
     "/gif random -> Affiche un gif aléatoire",
     "/gif search {query} -> Affiche 10 gifs en fonction d'un mot clé",
-    "/gpt {bot} {prompt} -> Affiche une réponse de chatGpt pour un bot choisi en fonction d'un prompt"
+    "/gpt {bot} {prompt} -> Affiche une réponse de chatGpt pour un bot choisi (admin, momo, christ, gaston) en fonction d'un prompt"
   ];
+
+let defaultDate = new Date().toLocaleString().replace(' ', ' à ').replace(/:..$/, '');
 
 let messageContainer = document.getElementById('message-container');
 let botsContainer = document.getElementById('bots-container');
@@ -25,9 +27,8 @@ const scrollToBottom = () => {
     messageContainer.scrollTop = messageContainer.scrollHeight;
 };
 
-const createMessageHtml = (isMine, avatar, name, message) => {
+const createMessageHtml = (isMine, avatar, name, message, datetime = defaultDate, isFromStorage) => {
     let html;
-    let datetime = new Date().toLocaleTimeString();
     let messageContent = message;
 
     if ((message.startsWith('http://') || message.startsWith('https://')) && (message.endsWith('.jpg') || message.endsWith('.png') || message.endsWith('.gif') || message.endsWith('&ct=g'))) {
@@ -58,6 +59,12 @@ const createMessageHtml = (isMine, avatar, name, message) => {
     }
 
     messageContainer.innerHTML += html;
+    
+    if (!isFromStorage) {
+        let messages = JSON.parse(localStorage.getItem('messages')) || [];
+        messages.push({ isMine, avatar, name, message, datetime });
+        localStorage.setItem('messages', JSON.stringify(messages));
+    }
 };
 
 const executeCommand = async (command) => {
@@ -73,6 +80,7 @@ const executeCommand = async (command) => {
 
         case '/clear':
             messageContainer.innerHTML = '';
+            localStorage.setItem('messages', JSON.stringify([]));
             break;
 
         case '/hello':
@@ -242,3 +250,12 @@ bots.forEach(bot => {
         <div class="ml-auto h-4 w-4 bg-green-500 rounded-full"></div>
       </li>`;
 });
+
+// get messages from local storage
+const messages = JSON.parse(localStorage.getItem('messages'));
+if (messages != null) {
+    messages.forEach(message => {
+        createMessageHtml(message.isMine, message.avatar, message.name, message.message, message.datetime, true);
+    });
+    scrollToBottom();
+}
