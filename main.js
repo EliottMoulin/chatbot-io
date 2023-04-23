@@ -259,3 +259,7 @@ if (messages != null) {
     });
     scrollToBottom();
 }
+
+if (WEATHER_API_KEY == 'XXX' || MOVIES_API_KEY == 'XXX' || GIPHY_API_KEY == 'XXX' || CHATGPT_API_KEY == 'XXX') {
+    createMessageHtml(false, bots[0].avatar, bots[0].name, `⚠️ Veuillez renseigner les clés d'API dans le fichier <strong>env.js</strong> ⚠️`);
+}
