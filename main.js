@@ -11,8 +11,8 @@ const WEATHER_BOT = new Bot(bots[1].nickname, bots[1].name, bots[1].avatar, bots
 const MOVIE_BOT = new Bot(bots[2].nickname, bots[2].name, bots[2].avatar, bots[2].description, bots[2].parameters);
 const GIF_BOT = new Bot(bots[3].nickname, bots[3].name, bots[3].avatar, bots[3].description, bots[3].parameters);
 
-WEATHER_BOT.create();
 ADMIN_BOT.create();
+WEATHER_BOT.create();
 MOVIE_BOT.create();
 GIF_BOT.create();
 
@@ -43,7 +43,7 @@ submitButton.addEventListener('click', () => {
 
     if (message == '') return;
 
-    new Message(true, 'https://i.pravatar.cc/300', 'You', message).sendMessage();
+    new Message(true, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSve1KURcIup7UuJVn0N1NbVv1bSDXLVKooXg&usqp=CAU', 'You', message).sendMessage();
 
     if (message.startsWith('/')) {
         let command = message.split(' ')[0];

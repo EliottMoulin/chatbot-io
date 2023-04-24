@@ -28,7 +28,7 @@ class Message {
             </div>`
         } else {
             html = `
-            <div class="flex items-start mb-4">
+            <div class="flex items-start mb-4 animate-fadein">
                 <img src="${this.avatar}" alt="avatar" class="w-10 h-10 rounded-full mr-3 object-cover border whitespace-nowrap">
                 <div class="flex flex-col">
                     <span class="font-semibold">${this.name}</span>
@@ -41,7 +41,12 @@ class Message {
         }
     
         messageContainer.innerHTML += html;
-        
+
+        const lastMessage = messageContainer.lastElementChild;
+        lastMessage.addEventListener('animationend', () => {
+            lastMessage.classList.remove('animate-fadein');
+        });
+ 
         if (!this.isFromStorage) this.saveMessage(this.isMine, this.avatar, this.name, this.message, this.datetime);
     }
 
