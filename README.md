@@ -3,7 +3,7 @@
 ## Setup
 
 1. Générer des clés d'API pour les services suivants : [OpenWeatherMap](https://home.openweathermap.org/api_keys), [Giphy](https://developers.giphy.com/dashboard/), [The Movie Database](https://www.themoviedb.org/settings/api) et [ChatGPT](https://platform.openai.com/account/api-keys)
-2. Ajouter vos propres clé d'API dans le fichier `env.json`
+2. Ajouter vos propres clé d'API dans le fichier `env.js`
 3. Ouvrir le fichier `index.html` dans votre navigateur
 
 ## Commandes
