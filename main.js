@@ -4,6 +4,8 @@ let messageContainer = document.getElementById('message-container');
 let botsContainer = document.getElementById('bots-container');
 let submitButton = document.getElementById('submit-button');
 let inputField = document.getElementById('input-field');
+let commandsList = document.getElementById("command-list");
+let commandAutocomplete = document.getElementById("command-autocomplete");
 
 // Initialize bot
 const ADMIN_BOT = new Bot(bots[0].nickname, bots[0].name, bots[0].avatar, bots[0].description, bots[0].parameters);
@@ -48,9 +50,53 @@ submitButton.addEventListener('click', () => {
     if (message.startsWith('/')) {
         let command = message.split(' ')[0];
         let args = message.split(' ').slice(1);
-        new Command(command,args).execute();
+        new Command(command, args).execute();
     }
     inputField.value = '';
     inputField.focus();
     scrollToBottom();
 });
+
+// Autocomplete commands
+
+inputField.addEventListener("input", () => {
+    if (inputField.value.startsWith("/")) {
+        showCommandsList();
+    } else {
+        hideCommandsList();
+    }
+});
+
+const showCommandsList = () => {
+    commandsList.innerHTML = "";
+
+    let autocompleteCommands = [];
+    let searchValue = inputField.value.toLowerCase();
+
+    commands.filter(command => {
+        return command.split(' ')[0].startsWith(searchValue);
+    }).forEach(command => {
+        let commandName = command.split(' ')[0];
+        if (!autocompleteCommands.includes(commandName)) {
+            commandsList.innerHTML += `<li class="px-4 py-2 cursor-pointer rounded-md hover:bg-gray-300 " onclick="onClickCommand('${commandName}')">${commandName}</li>`;
+            autocompleteCommands.push(commandName);
+        }
+    });
+
+    if (autocompleteCommands.length != 0) {
+        commandAutocomplete.classList.remove("hidden");
+    } else {
+        commandAutocomplete.classList.add("hidden");
+    }
+
+}
+
+const onClickCommand = (command) => {
+    inputField.value = command + ' ';
+    hideCommandsList();
+    inputField.focus();
+}
+
+const hideCommandsList = () => {
+    commandAutocomplete.classList.add("hidden");
+}
