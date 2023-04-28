@@ -42,21 +42,22 @@
             <!-- All Messages here...-->
         </div>
 
-        <!-- Command Autocomplete -->
-        <div id="command-autocomplete" class="bg-gray-200 px-4 py-2 hidden rounded-t-md">
-            <ul id="command-list" class="list-none px-0">
-                <!-- List of commands here... -->
-            </ul>
-        </div>        
-
-        <form class="bg-gray-200 px-4 py-2">
-            <div class="flex">
-                <input id="input-field" type="text" placeholder="/help for commands" autocomplete="off"
-                    class="flex-1 rounded-md px-4 py-2 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <button id="submit-button" type="submit"
-                    class="bg-blue-500 rounded-md px-4 py-2 text-white font-semibold hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Send</button>
+        <div class="relative">
+            <div id="command-autocomplete" class="bg-gray-200 px-4 py-2 hidden rounded-t-md absolute bottom-full w-full">
+                <ul id="command-list" class="list-none px-0">
+                    <!-- List of commands here... -->
+                </ul>
             </div>
-        </form>
+
+            <form class="bg-gray-200 px-4 py-2">
+                <div class="flex">
+                    <input id="input-field" type="text" placeholder="/help for commands" autocomplete="off"
+                        class="flex-1 rounded-md px-4 py-2 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <button id="submit-button" type="submit"
+                        class="bg-blue-500 rounded-md px-4 py-2 text-white font-semibold hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Send</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 <script src="config/env.js"></script>
